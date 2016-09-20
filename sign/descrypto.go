@@ -9,7 +9,7 @@ import (
 )
 
 func getDesKey() []byte {
-	key := []byte(_secretKey)[:8]
+	key := []byte(_secretKey)[:8] // only use the fist 8 characters of the secret key
 	return key
 }
 
@@ -36,8 +36,11 @@ func DesEncrypt(data string) (string, error) {
 }
 
 func DesDecrypt(data string) (string, error) {
+	// convert string to []byte
 	src, _ := hex.DecodeString(data)
+
 	key := getDesKey()
+
 	block, err := des.NewCipher(key)
 	if err != nil {
 		return "", err
